@@ -2,12 +2,55 @@
 {% extends "layouts/master.njk" %}
 
 {% block content %}
-	<div id="app">
-		<input v-model="inputValue" type="text">
-		{{inputValue}} {# <-- i can use the brackets now #}
 
-		<ul>
-			<list-item v-bind:value="inputValue"></list-item>
-		</ul>
+<div id="app" class="app-block">
+
+	<div class="stats">
+		<h3 class="stats__title">Tasks: {{tasks.length}}</h3>
 	</div>
+	
+	<div class="add_task">
+		<div class="add_task__input">
+			<input type="text" placeholder="Add task..." v-on:keyup.enter="add_task">
+		</div>
+	</div>
+
+	<task @task_done="delete_task(data.id)" :key="index" v-for="(data,index) in tasks" :data="data" ></task>
+</div>
+
+
+
+
+
+
+<div id="app-2" class="app-block">
+
+	<div class="stats">
+		<h3 class="stats__title">Tasks: {{todos.length}}</h3>
+	</div>
+
+	<div class="add_task">
+		<div class="add_task__input">
+			<input type="text" placeholder="Add task..." v-on:keyup.enter="addTask"> 
+		</div>
+	</div> 
+
+	<ul >
+		<li class="task" v-for="(todo,index) in todos" :key="index">
+			<div>
+				<label>
+				<input type="checkbox" v-model="todo.done">
+				<span>&nbsp</span>
+				</label>
+			<del class="task__title" v-if="todo.done">{{ todo.text }}</del>
+			<span class="task__title" v-else>{{ todo.text }}</span>
+			</div>
+			<button class="task__done" v-on:click="removeTask(todo.id)">&#x274C</button>
+		</li>
+	</ul>
+
+</div>
+
+
+
 {% endblock %}
