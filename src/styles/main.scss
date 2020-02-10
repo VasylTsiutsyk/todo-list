@@ -22,8 +22,8 @@ $color-title: white;
     box-shadow: 0 3px 20px #00000023;
     font-family: 'Gilroy', sans-serif;
     padding: 10px;
-    margin: 20px 0 0 20px;
     margin: 0 auto;
+    margin-top: 20px;
     color: $base-color;
 }
 
@@ -104,4 +104,9 @@ $color-title: white;
     cursor: pointer;
     border-radius: 4px;
     background-color: #2f485811;
+}
+
+.btn-random {
+    padding: 5px 20px;
+    width: 100%;
 }

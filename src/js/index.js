@@ -1,8 +1,8 @@
-import '@babel/polyfill';
+import "@babel/polyfill";
 import Vue from "vue/dist/vue.esm.js";
 
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
 
     Vue.component("task", {
         props: ["data"],
@@ -63,6 +63,23 @@ document.addEventListener('DOMContentLoaded', () => {
             removeTask(id) {
                 this.todos = this.todos.filter(todo => todo.id !== id);
             }
+        }
+    });
+
+
+
+    new Vue({
+        el: "#app-3",
+        data: {
+            todos: []
+        },
+        methods: {
+            getRandom() {
+                return Math.round(Math.random() * 100);
+            },
+            addTask() {
+                this.todos.push({ text: this.getRandom() });
+            },
         }
     });
 });

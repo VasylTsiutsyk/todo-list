@@ -52,5 +52,15 @@
 </div>
 
 
-
+<div id="app-3" class="app-block">
+	<div class="stats">
+		<h3 class="stats__title">Random</h3>
+	</div>
+	<button class="btn-random" v-on:click="addTask">Get Random</button>
+	<ol>
+		<li class="task" v-for="todo in todos"> {{ todo.text }}
+		</li> 
+	</ol>
+	
+</div>
 {% endblock %}
