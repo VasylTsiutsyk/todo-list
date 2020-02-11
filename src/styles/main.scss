@@ -110,3 +110,18 @@ $color-title: white;
     padding: 5px 20px;
     width: 100%;
 }
+
+///
+.block {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+}
+
+.first-component {
+    outline: 1px solid red;
+}
+
+.second-component {
+    outline: 1px solid black;
+}
