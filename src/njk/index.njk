@@ -3,76 +3,51 @@
 
 {% block content %}
 
-{# <div id="app" class="app-block">
+<hr>
 
-	<div class="stats">
-		<h3 class="stats__title">Tasks: {{tasks.length}}</h3>
-	</div>
-	
-	<div class="add_task">
-		<div class="add_task__input">
-			<input type="text" placeholder="Add task..." v-on:keyup.enter="add_task">
+<div id="watch-example">
+	<p>
+		Задайте вопрос, на который можно ответить «да» или «нет»:
+		<input v-model="question">
+	</p>
+	<p>{{ answer }}</p>
+	<img class="img-wrap" v-bind:src="srcImage"  alt="">
+</div>
+
+<hr>
+<div class="siema-wrap">
+	<div class="siema">
+		<div>
+		  	<li class="work__item" style=" background-image: url(./img/step1.png);">
+                <span class="button-step">STEP 1</span>
+                <h2 class="work__title">Sed leo enim, condimentum</h2>
+                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
+            </li>
+		</div>
+		<div>
+			<li class="work__item" style=" background-image: url(./img/step2.png);">
+                <span class="button-step">STEP 2</span>
+                <h2 class="work__title">Morbi velit risus</h2>
+                <p class="global__paragraph">Nulla venenatis tempor dui in molestie. Nulla quis dictum purus, sit amet porttitor est.</p>
+        	</li>
+		</div>
+		<div>
+		   	<li class="work__item" style=" background-image: url(./img/step3.png);">
+                <span class="button-step">STEP 3</span>
+                <h2 class="work__title">Sed leo enim, condimentum</h2>
+                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
+            </li>
+		</div>
+		<div>
+		   	<li class="work__item" style=" background-image: url(./img/step2.png);">
+                <span class="button-step">STEP 4</span>
+                <h2 class="work__title">Sed leo enim, condimentum</h2>
+                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
+            </li>
 		</div>
 	</div>
-
-	<task @task_done="delete_task(data.id)" :key="index" v-for="(data,index) in tasks" :data="data" ></task>
 </div>
-
-
-
-
-
-
-<div id="app-2" class="app-block">
-
-	<div class="stats">
-		<h3 class="stats__title">Tasks: {{todos.length}}</h3>
-	</div>
-
-	<div class="add_task">
-		<div class="add_task__input">
-			<input type="text" placeholder="Add task..." v-on:keyup.enter="addTask"> 
-		</div>
-	</div> 
-
-	<ul >
-		<li class="task" v-for="(todo,index) in todos" :key="index">
-			<div>
-				<label>
-				<input type="checkbox" v-model="todo.done">
-				<span>&nbsp</span>
-				</label>
-			<del class="task__title" v-if="todo.done">{{ todo.text }}</del>
-			<span class="task__title" v-else>{{ todo.text }}</span>
-			</div>
-			<button class="task__done" v-on:click="removeTask(todo.id)">&#x274C</button>
-		</li>
-	</ul>
-
-</div>
-
-
-<div id="app-3" class="app-block">
-	<div class="stats">
-		<h3 class="stats__title">Random</h3>
-	</div>
-	<button class="btn-random" v-on:click="addTask">Get Random</button>
-	<ol>
-		<li class="task" v-for="todo in todos"> {{ todo.text }}
-		</li> 
-	</ol>
-	
-</div> #}
-
-
-<div id="app-4">
-	<blog-list></blog-list>
-</div>
-
-<div id="app-5">
-	<first-component></first-component>
-	<second-component></second-component>
-</div>
+<hr>
 
 
 

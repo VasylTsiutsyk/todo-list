@@ -125,3 +125,59 @@ $color-title: white;
 .second-component {
     outline: 1px solid black;
 }
+
+////siema-slider
+.siema-wrap {
+    max-width: 800px;
+}
+
+.global__paragraph {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 14px;
+    color: #E3E3E3;
+}
+
+.work__item {
+    height: 400px;
+    margin: 10px;
+    border-radius: 4px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-end;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.work__title {
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 24px;
+    color: white;
+}
+
+.button-step {
+    background: #FF4E50;
+    border-radius: 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    letter-spacing: 2px;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+}
+
+///
+.img-wrap {
+    width: 400px;
+    height: 200px;
+}
