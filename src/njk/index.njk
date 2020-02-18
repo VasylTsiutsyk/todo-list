@@ -3,51 +3,30 @@
 
 {% block content %}
 
-<hr>
 
-<div id="watch-example">
-	<p>
-		Задайте вопрос, на который можно ответить «да» или «нет»:
-		<input v-model="question">
-	</p>
-	<p>{{ answer }}</p>
-	<img class="img-wrap" v-bind:src="srcImage"  alt="">
-</div>
+<div id="app" class="container">
 
-<hr>
-<div class="siema-wrap">
-	<div class="siema">
-		<div>
-		  	<li class="work__item" style=" background-image: url(./img/step1.png);">
-                <span class="button-step">STEP 1</span>
-                <h2 class="work__title">Sed leo enim, condimentum</h2>
-                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
-            </li>
-		</div>
-		<div>
-			<li class="work__item" style=" background-image: url(./img/step2.png);">
-                <span class="button-step">STEP 2</span>
-                <h2 class="work__title">Morbi velit risus</h2>
-                <p class="global__paragraph">Nulla venenatis tempor dui in molestie. Nulla quis dictum purus, sit amet porttitor est.</p>
-        	</li>
-		</div>
-		<div>
-		   	<li class="work__item" style=" background-image: url(./img/step3.png);">
-                <span class="button-step">STEP 3</span>
-                <h2 class="work__title">Sed leo enim, condimentum</h2>
-                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
-            </li>
-		</div>
-		<div>
-		   	<li class="work__item" style=" background-image: url(./img/step2.png);">
-                <span class="button-step">STEP 4</span>
-                <h2 class="work__title">Sed leo enim, condimentum</h2>
-                <p class="global__paragraph">Quisque libero libero, dictum non turpis in, luctus semper lorem. Donec rhoncus a leo sit amet facilisis.</p>
-            </li>
+	<div class="container cart__container">
+		<div v-for="item in items" class="cart__item">
+				<h4>{{ item.title }}</h4>
+				<h5>$ {{ item.price}}</h5>
+				<input type="number" v-model="item.qty" min=1/>
+				<input type="checkbox" v-model="item.checked">
+				<br>
+				<button @click="addToCart(item)" class="btn">Add to Cart</button>
 		</div>
 	</div>
+
+	<button class="btn">Cart ({{cartItems.length}})</button>
+	
+	<div class="modal container" >
+		<h4>Cart</h4>
+		<div class="modal-body">
+            <shopping-cart :items="cartItems"></shopping-cart>
+        </div>
+        <button class="btn" v-show="true">Close</button>
+	</div>
 </div>
-<hr>
 
 
 

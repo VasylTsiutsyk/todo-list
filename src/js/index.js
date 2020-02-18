@@ -1,63 +1,77 @@
 import "@babel/polyfill";
 import Vue from "vue/dist/vue.esm.js";
 import _ from "lodash";
-import axios from "axios";
-import Siema from "siema";
 
 
 document.addEventListener("DOMContentLoaded", () => {
-    let imgWrap = document.querySelector(".img-wrap");
 
-
-    let watchExampleVM = new Vue({
-        el: "#watch-example",
-        data: {
-            question: "",
-            answer: "Пока вы не зададите вопрос, я не могу ответить!",
-            srcImage: "",
-        },
-        watch: {
-            question: function(newQuestion, oldQuestion) {
-                this.answer = "Ожидаю, когда вы закончите печатать...";
-                this.debouncedGetAnswer();
+    Vue.component('shopping-cart', {
+        props: ['items'],
+        computed: {
+            totalSum() {
+                let total = 0;
+                this.items.forEach(item => {
+                    if(item.checked === true) {
+                        total += (item.price * +item.qty);
+                    }
+                });
+                return total;
             }
-        },
-        created: function() {
-            this.debouncedGetAnswer = _.debounce(this.getAnswer, 500);
         },
         methods: {
-            getAnswer: function() {
-                if (this.question.indexOf("?") === -1) {
-                    this.answer = "Вопросы обычно заканчиваются вопросительным знаком. ;-)";
-                    return;
+            removeItem(index) {
+                this.items.splice(index, 1);
+            }
+        },
+        template:
+            `
+            <div>
+                <div v-for="(item, index) in items" class="df">
+                    <span style="width:25%">{{item.title}}</span>
+                    <input type="number" v-model="item.qty" style="width:15%">
+                    <span>$ {{item.price}}</span>
+                    <input type="checkbox" v-model="item.checked">
+                    <button @click="removeItem(index)" class="">&#10005;</button>
+                </div>
+                    
+                <div v-show="items.length === 0">
+                    <p>Cart is empty</p>
+                </div>
+                    
+                <div v-show="items.length > 0">
+                    <hr>
+                    <p>Total:  $ {{totalSum}}</p>
+                </div>
+            </div>
+            `
+    });
+
+
+    const vm = new Vue({
+        el: '#app',
+        data: {
+            cartItems: [],
+            items: [
+                { id: 1, title: 'Macbook Pro', price: 1500.00, qty: 1, checked: false },
+                { id: 2, title: 'Iphone SE', price: 300.00, qty: 1, checked: false  },
+                { id: 3, title: 'Air pods', price: 150.00, qty: 1 , checked: false },
+                { id: 4, title: 'Apple Watch', price: 10, qty: 1 , checked: false },
+            ],
+        },
+
+        methods: {
+            addToCart(itemToAdd) {
+                let itemInCart = this.cartItems.filter(item => item.id === itemToAdd.id);
+
+                if (itemInCart.length > 0) {
+                    this.cartItems.push(Object.assign({},this.cartItems, itemToAdd));
+                } else {
+                    itemInCart[0].qty += +itemToAdd.qty;
                 }
-                this.answer = "Думаю...";
-                var vm = this;
-                axios.get("https://yesno.wtf/api")
-                    .then(function(response) {
-                        vm.answer = _.capitalize(response.data.answer);
-                        vm.srcImage = _.capitalize(response.data.image);
-                    })
-                    .catch(function(error) {
-                        vm.answer = "Ошибка! Не могу связаться с API. " + error;
-                    });
+                itemToAdd.qty = 1;
             }
         }
     });
 
-
-
-
-    let app = new Vue({
-        el: ".siema",
-        mounted() {
-            this.mySiema = new Siema({
-                duration: 300,
-                easing: "ease-out",
-                perPage: 3,
-                loop: false,
-            });
-        }
-    });
 
 });
