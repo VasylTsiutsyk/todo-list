@@ -7,6 +7,7 @@
 @import '../blocks/components/components';
 @import '../blocks/modules/modules';
 * {
+    box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
     padding: 0;
     margin: 0;
@@ -14,43 +15,123 @@
     list-style: none;
 }
 
-.container {
-    padding: 20px;
-    max-width: 650px;
-    border-radius: 5px;
+.card__container {
     margin: 0 auto;
-}
-.df {
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-start;
-}
-.cart__container {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: rgb(184, 184, 184);
-    margin: 10px 0;
+    padding: 20px;
+    width: 400px;
+    background-color: rgb(214, 214, 214);
+    border-radius: 5px;
 }
 
-.cart__item {
-    margin: 10px;
+.card__container h1 {
+    background-color: rgb(180, 179, 179);
+    margin: 10px -20px;
+    padding: 20px;
+}
+
+.card__container h2 {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.card__container input[type=text] {
+    border-radius: 5px;
+    margin: 10px 0;
+    padding: 5px;
+    width: 100%;
+    transition: all 0.3s ease-in-out;
+}
+
+.card__container input[type=text]:hover {
+    background-color: rgb(211, 211, 211);
 }
 
 .btn {
     cursor: pointer;
-    padding: 5px 10px;
+    color: white;
+    background-color: black;
+    padding: 10px 20px;
     margin: 10px 0;
     border-radius: 5px;
-    background-color: grey;
-    color: white;
     transition: all 0.3s ease-in-out;
 }
 
 .btn:hover,
 .btn:focus {
-    background-color: rgb(102, 102, 102);
+    background-color: rgb(51, 51, 51);
 }
 
-.modal {
-    background-color: rgb(195, 195, 195);
+.df {
+    display: flex;
+}
+
+.card__type {
+    display: block;
+    color: green;
+    margin: 10px 0;
+}
+
+.radio-container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    user-select: none;
+    width: 25%;
+    height: 20px;
+    margin: 5px;
+}
+
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.checkmark {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #eee;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.radio-container input:checked~.checkmark {
+    background-color: #2196F3;
+}
+
+.radio-container input:checked~.checkmark:after {
+    display: block;
+}
+
+.radio-container:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+.radio-container .checkmark:after {
+    left: 9px;
+    top: 5px;
+    width: 10px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.errors {
+    color: brown;
 }

@@ -4,30 +4,52 @@
 {% block content %}
 
 
-<div id="app" class="container">
+<form id="app" class="card__container" @submit="checkForm">
+	<h1>Pay invoice</h1>
+	<div id="radios">
+		<h2>Pay method</h2>
+		<div class="df">
+			<radio-component v-for="item in items"></radio-component>
+		</div>	
+	</div>
 
-	<div class="container cart__container">
-		<div v-for="item in items" class="cart__item">
-				<h4>{{ item.title }}</h4>
-				<h5>$ {{ item.price}}</h5>
-				<input type="number" v-model="item.qty" min=1/>
-				<input type="checkbox" v-model="item.checked">
-				<br>
-				<button @click="addToCart(item)" class="btn">Add to Cart</button>
+	<div class="card__number">
+		<h2>Card number</h2>
+		<input type="text" name="" id="" placeholder="Card number" v-model="cardNumber" minlength="16" maxlength="16">
+		<span class="card__type">{{getCardType}}</span>
+		<span class="card__type">{{validCreditCard()}}</span>
+	</div>
+
+	<div class="df">
+		<div class="card__number">
+			<h2>Expire date</h2>
+			<date-picker v-model="date"></date-picker>
+		</div>
+
+		<div class="card__number">
+			<h2>Security code</h2>
+			<input type="text" name="" id="" placeholder="Security code" v-model="cardCvv" maxlength="3"  minlength="3">
 		</div>
 	</div>
 
-	<button class="btn">Cart ({{cartItems.length}})</button>
-	
-	<div class="modal container" >
-		<h4>Cart</h4>
-		<div class="modal-body">
-            <shopping-cart :items="cartItems"></shopping-cart>
-        </div>
-        <button class="btn" v-show="true">Close</button>
+	<div class="card__number">
+		<h2>Card name</h2>
+		<input type="text" name="" id="" placeholder="Card name" v-model="cardName">
 	</div>
-</div>
+
+	<input type="submit" value="Pay" class="btn" >
 
 
+	<p v-if="errors.length" class="errors">
+    	<b>Please try to fix problems:</b>
+    	<ul>
+      		<li v-for="error in errors">{{ error }}</li>
+    	</ul>
+  	</p>
+	<flash-message></flash-message>
+</form>
+  
+    
 
+  </div>
 {% endblock %}

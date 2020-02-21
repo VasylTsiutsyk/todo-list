@@ -1,77 +1,137 @@
 import "@babel/polyfill";
 import Vue from "vue/dist/vue.esm.js";
-import _ from "lodash";
+import Datepicker from "vuejs-datepicker";
+import FlashMessage from "@smartweb/vue-flash-message";
+Vue.use(FlashMessage);
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    Vue.component("flash-message", FlashMessage);
 
-    Vue.component('shopping-cart', {
-        props: ['items'],
-        computed: {
-            totalSum() {
-                let total = 0;
-                this.items.forEach(item => {
-                    if(item.checked === true) {
-                        total += (item.price * +item.qty);
-                    }
-                });
-                return total;
-            }
+    Vue.component("date-picker", Datepicker);
+
+    Vue.component("radio-component", {
+        data() {
+            return {
+                picked: "",
+                myStyle: {
+                    backgroundColor: "blue"
+                },
+            };
         },
-        methods: {
-            removeItem(index) {
-                this.items.splice(index, 1);
-            }
-        },
-        template:
-            `
-            <div>
-                <div v-for="(item, index) in items" class="df">
-                    <span style="width:25%">{{item.title}}</span>
-                    <input type="number" v-model="item.qty" style="width:15%">
-                    <span>$ {{item.price}}</span>
-                    <input type="checkbox" v-model="item.checked">
-                    <button @click="removeItem(index)" class="">&#10005;</button>
-                </div>
-                    
-                <div v-show="items.length === 0">
-                    <p>Cart is empty</p>
-                </div>
-                    
-                <div v-show="items.length > 0">
-                    <hr>
-                    <p>Total:  $ {{totalSum}}</p>
-                </div>
-            </div>
-            `
+        template: `
+            <label for="" class="radio-container" >
+                <input type="radio" name="radios" value="this.$root.items.myStyle" v-model="picked">
+                <span class="checkmark" :style="$root.myStyle"></span>  
+            </label>
+`
     });
-
-
-    const vm = new Vue({
-        el: '#app',
+    new Vue({
+        el: "#app",
         data: {
-            cartItems: [],
-            items: [
-                { id: 1, title: 'Macbook Pro', price: 1500.00, qty: 1, checked: false },
-                { id: 2, title: 'Iphone SE', price: 300.00, qty: 1, checked: false  },
-                { id: 3, title: 'Air pods', price: 150.00, qty: 1 , checked: false },
-                { id: 4, title: 'Apple Watch', price: 10, qty: 1 , checked: false },
-            ],
+            errors: [],
+            cardNumber: "",
+            cardName: "",
+            correctCardName: "vasyl",
+            cardCvv: "",
+            correctCardCvv: "111",
+            date: "",
+            correctCardDate: "",
+            items: [{
+                myStyle: {
+                    backgroundColor: "blue"
+                },
+            }, {
+                myStyle: {
+                    backgroundColor: "green"
+                },
+            }, {
+                myStyle: {
+                    backgroundColor: "yellow"
+                },
+            }, {
+                myStyle: {
+                    backgroundColor: "purple"
+                },
+            }]
         },
+        computed: {
+            getCardType() {
+                let number = this.cardNumber;
+                let re = new RegExp("^4");
+                if (number.match(re) != null) return "visa";
 
-        methods: {
-            addToCart(itemToAdd) {
-                let itemInCart = this.cartItems.filter(item => item.id === itemToAdd.id);
+                re = new RegExp("^(34|37)");
+                if (number.match(re) != null) return "amex";
 
-                if (itemInCart.length > 0) {
-                    this.cartItems.push(Object.assign({},this.cartItems, itemToAdd));
-                } else {
-                    itemInCart[0].qty += +itemToAdd.qty;
-                }
-                itemToAdd.qty = 1;
+                re = new RegExp("^5[1-5]");
+                if (number.match(re) != null) return "mastercard";
+
+                re = new RegExp("^6011");
+                if (number.match(re) != null) return "discover";
+
+                re = new RegExp("^9792");
+                if (number.match(re) != null) return "troy";
+
+                return "visa";
             }
+        },
+        methods: {
+            validCreditCard() {
+                let number = this.cardNumber;
+                if (/[^0-9-\s]+/.test(number)) return false;
+                let nCheck = 0,
+                    nDigit = 0,
+                    bEven = false;
+                number = number.replace(/\D/g, "");
+
+                for (let n = number.length - 1; n >= 0; n--) {
+                    let cDigit = number.charAt(n),
+                        nDigit = parseInt(cDigit, 10);
+
+                    if (bEven) {
+                        if ((nDigit *= 2) > 9) nDigit -= 9;
+                    }
+
+                    nCheck += nDigit;
+                    bEven = !bEven;
+                }
+                return (nCheck % 10) == 0;
+            },
+            checkForm(e) {
+                this.errors = [];
+
+                if (!this.cardName) {
+                    this.errors.push("Write your card name.");
+                    this.flashMessage.error({ title: "Error Message Title", message: 'Oh, you broke my heart! Shame on you!' });
+                } else if (this.cardName !== this.correctCardName) {
+                    this.errors.push("Write your correct card name.");
+                }
+
+                if (!this.cardCvv) {
+                    this.errors.push("Write your card security code.");
+                } else if (this.cardName !== this.correctCardCvv) {
+                    this.errors.push("Write your correct card security code.");
+                }
+
+                if (!this.date) {
+                    this.errors.push("Write your card entire date.");
+                } else if (this.cardName !== this.correctCardDate) {
+                    this.errors.push("Write your correct card entire date.");
+                }
+
+                if (!this.cardNumber) {
+                    this.errors.push("Write your card number.");
+                } else if (!this.validCreditCard()) {
+                    this.errors.push("Write your correct card number.");
+                }
+
+                if (!this.errors.length) {
+                    this.flashMessage.success({ title: "Success Message Title", message: "Hoorah, it is my fist npm package and it works!" });
+                    return true;
+                }
+                e.preventDefault();
+            },
         }
     });
-
-
 });
